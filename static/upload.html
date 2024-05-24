@@ -2,23 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <title>File Upload</title>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data">
-        <label>Select your files:</label>
-        <input type="file" name="files" id="files" multiple><br>
+    <div id="main">
+        <form method="post" enctype="multipart/form-data" id="form-data">
+            <label>Select your files:</label>
+            <div class="file-input-container">
+                <button type="button" class="custom-file-button">Browse files</button>
+                <p id="selected"></p>
+                <input type="file" name="files" id="files" class="file-input" multiple>
+            </div><br>
+        </form>
+        <input type="button" value="Submit" onclick="submit()">
+    </div>
+    <script>
+        document.querySelector('.custom-file-button').addEventListener('click', () => {
+            document.getElementById('files').click();
+        });
 
-        <button type="submit" onclick="submit()">SUBMIT</button>
-    </form>
-<script>
-    function submit() {
-        const files = document.getElementById("files")
-        for (const file in files) {
-            console.log(file)
+        function submit() {
+            const files = document.getElementById("files").files;
+
+            const formData = new FormData();
+            for (const file of files) {
+                formData.append("file", file);
+            }
+
+            fetch("http://localhost:8080/upload", {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    alert("Successfully uploaded Files!")
+                } else {
+                    alert("Failed to upload files.")
+                }
+            }).catch((error) => {
+                alert("Error: " + error);
+            })
         }
-    }
-</script>
+    </script>
 </body>
 </html>

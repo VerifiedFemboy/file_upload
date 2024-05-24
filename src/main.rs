@@ -1,8 +1,9 @@
-mod upload_file;
-
 use std::path::Path;
-use actix_files::NamedFile;
-use actix_web::{App, HttpServer, get, web};
+
+use actix_files::{Files, NamedFile};
+use actix_web::{App, get, HttpResponse, HttpServer, Resource, Responder, web};
+
+mod upload_file;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -15,7 +16,9 @@ async fn main() -> std::io::Result<()> {
     //Runs the server
     HttpServer::new(|| App::new()
         .service(upload_file::upload_post)
-        .service(get_static_file))
+        .service(get_static_file)
+        .service(Files::new("/static", "./static")
+            .show_files_listing()))
         .bind("127.0.0.1:8080")?.run().await
 }
 
@@ -25,5 +28,4 @@ async fn get_static_file(filename: web::Path<String>) -> actix_web::Result<Named
     let path: &Path = Path::new(&filename);
     Ok(NamedFile::open(path)?)
 }
-
 
