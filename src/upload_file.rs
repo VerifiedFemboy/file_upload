@@ -13,7 +13,7 @@ pub async fn upload_post(mut payload: Multipart, req: HttpRequest) -> HttpRespon
         let content = field.content_disposition();
 
         let file_name = content.get_filename().unwrap_or("unknown").to_string();
-        let file_path = format!("./upload/{}", file_name);
+        let file_path = format!("{DIRECTORY}{}", file_name);
 
         //create file
         let mut f = web::block(|| fs::File::create(file_path)).await.unwrap().unwrap();
