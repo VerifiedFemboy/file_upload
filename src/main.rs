@@ -1,7 +1,9 @@
 use std::path::Path;
 
 use actix_files::{Files, NamedFile};
-use actix_web::{App, get, HttpResponse, HttpServer, Resource, Responder, web};
+use actix_web::{App, get, HttpServer, web};
+
+use crate::upload_file::{list_files, serve_file};
 
 mod upload_file;
 
@@ -16,6 +18,8 @@ async fn main() -> std::io::Result<()> {
     //Runs the server
     HttpServer::new(|| App::new()
         .service(upload_file::upload_post)
+        .service(list_files)
+        .service(serve_file)
         .service(get_static_file)
         .service(Files::new("/static", "./static")
             .show_files_listing()))
