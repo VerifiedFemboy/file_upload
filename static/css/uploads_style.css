@@ -1,0 +1,28 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffe4e1; /* Light pink background */
+    animation: fadeInBackground 1s ease-in-out;
+}
+
+@keyframes fadeInBackground {
+    from {
+        background-color: #ffffff;
+    }
+    to {
+        background-color: #ffe4e1;
+    }
+}
+
+#main {
+    background-color: #fff0f5; /* Lavender blush background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: fadeInMain 1s ease-in-out;
+}
