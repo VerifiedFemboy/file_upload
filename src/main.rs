@@ -6,6 +6,7 @@ use actix_web::{App, get, HttpServer, web};
 use crate::upload_file::{list_files, serve_file};
 
 mod upload_file;
+mod manage;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -21,6 +22,7 @@ async fn main() -> std::io::Result<()> {
         .service(list_files)
         .service(serve_file)
         .service(get_static_file)
+        .service(manage::manage_file)
         .service(Files::new("/static", "./static")
             .show_files_listing()))
         .bind("127.0.0.1:8080")?.run().await

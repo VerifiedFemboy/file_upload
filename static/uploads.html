@@ -8,10 +8,10 @@
 <body>
     <div id="main">
 <!--        The {} is for formating in rust which the files from upload will be shown here-->
-        <div id="files" onload="refresh()">
+        <div id="files">
             {}
             <br>
-            <input type="button" value="UPLOAD" onclick="location.href='http://localhost:8080/upload';">
+            <input type="button" value="UPLOAD" onclick="location.href='/upload';" id="upload">
         </div>
     </div>
     <script src="/static/js/main.js">

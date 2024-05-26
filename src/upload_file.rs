@@ -45,19 +45,22 @@ pub async fn list_files() -> HttpResponse {
                         match extension {
                             "png" | "jpg" | "jpeg" | "gif" => {
                                 file_links.push_str(&format!(
-                                    "<a id=\"file\" href=\"/uploads/{}\" target=\"_blank\"><img src=\"/uploads/{}\" alt=\"{}\" style=\"width:500px;height:auto;\" /></a>",
+                                    "<div class=\"file_container\"><a id=\"file\" href=\"/uploads/{}\" target=\"_blank\"><img src=\"/uploads/{}\" alt=\"{}\" style=\"width:500px;height:auto;\" /></a>
+                                    <input type=\"button\" class=\"delete_btn\" value=\"🗑️\" onclick=\"delete_file('{filename}')\"></div>",
                                     filename, filename, filename
                                 ));
                             },
                             "mp4" | "webm" | "ogg" => {
                                 file_links.push_str(&format!(
-                                    "<video id=\"file\" width=\"500\" height=\"auto\" controls><source src=\"/uploads/{}\" type=\"video/{}\">Your browser does not support the video tag.</video>",
+                                    "<div class=\"file_container\"><video id=\"file\" width=\"500\" height=\"auto\" controls><source src=\"/uploads/{}\" type=\"video/{}\">Your browser does not support the video tag.</video>
+                                    <input type=\"button\" class=\"delete_btn\" value=\"🗑️\" onclick=\"delete_file('{filename}')\"></div>",
                                     filename, extension
                                 ));
                             },
                             _ => {
                                 file_links.push_str(&format!(
-                                    "<a id=\"file\" href=\"/uploads/{}\">{}</a>",
+                                    "<a id=\"file\" href=\"/uploads/{}\">{}</a>
+                                    <input type=\"button\" class=\"delete_btn\" value=\"🗑️\" onclick=\"delete_file('{filename}')\">",
                                     filename, filename
                                 ));
                             }
@@ -71,7 +74,7 @@ pub async fn list_files() -> HttpResponse {
                 }
             }
 
-            if read_dir(DIRECTORY).unwrap().next().is_none() {
+            if file_links.is_empty() {
                 file_links = "There is no uploaded file".to_string();
             }
 

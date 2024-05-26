@@ -6,7 +6,7 @@ function submit() {
         formData.append("file", file);
     }
 
-    fetch("http://localhost:8080/upload", {
+    fetch("/upload", {
         method: 'POST',
         body: formData
     }).then(response => {
@@ -29,4 +29,21 @@ function refresh() {
         location.reload()
         refresh()
     }, 1000)
+}
+
+function delete_file(filename) {
+    fetch("/manage/delete", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ filename: filename })
+    }).then(response => response.text())
+        .then(data => {
+            alert(data)
+            location.reload()
+        })
+        .catch(error => {
+            console.error("Err: ", error)
+        })
 }

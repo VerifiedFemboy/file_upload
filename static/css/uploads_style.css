@@ -31,11 +31,30 @@ body, html {
     margin: 5px;
 }
 
-#file {
-    padding: 10px;
+
+.file_container {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
 }
 
-input[type="button"] {
+.file_container:hover .delete_btn {
+    display: block;
+}
+
+.delete_btn {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#upload {
     background-color: #ff69b4; /* Hot pink background */
     color: white;
     border: none;
@@ -47,7 +66,7 @@ input[type="button"] {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-input[type="button"]:hover {
+#upload:hover {
     background-color: #ff1493; /* Deep pink background */
     transform: scale(1.05);
 }
