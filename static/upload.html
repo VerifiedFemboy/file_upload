@@ -17,32 +17,12 @@
         </form>
         <input type="button" value="Submit" onclick="submit()">
     </div>
+    <script src="/static/js/main.js">
+    </script>
     <script>
         document.querySelector('.custom-file-button').addEventListener('click', () => {
             document.getElementById('files').click();
         });
-
-        function submit() {
-            const files = document.getElementById("files").files;
-
-            const formData = new FormData();
-            for (const file of files) {
-                formData.append("file", file);
-            }
-
-            fetch("http://localhost:8080/upload", {
-                method: 'POST',
-                body: formData
-            }).then(response => {
-                if (response.ok) {
-                    alert("Successfully uploaded Files!")
-                } else {
-                    alert("Failed to upload files.")
-                }
-            }).catch((error) => {
-                alert("Error: " + error);
-            })
-        }
     </script>
 </body>
 </html>

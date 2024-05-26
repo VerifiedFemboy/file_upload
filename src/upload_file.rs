@@ -1,4 +1,5 @@
 use std::fs as fs;
+use std::fs::read_dir;
 use std::io::Write;
 use std::path::Path;
 
@@ -32,9 +33,9 @@ pub async fn upload_post(mut payload: Multipart) -> HttpResponse {
     HttpResponse::Ok().body("File uploaded successfully")
 }
 
-#[get("/uploads")]
+#[get("/")] //This is an index for uploads
 pub async fn list_files() -> HttpResponse {
-    match fs::read_dir(DIRECTORY) {
+    match read_dir(DIRECTORY) {
         Ok(entries) => {
             let mut file_links = String::new();
 
@@ -44,19 +45,19 @@ pub async fn list_files() -> HttpResponse {
                         match extension {
                             "png" | "jpg" | "jpeg" | "gif" => {
                                 file_links.push_str(&format!(
-                                    "<a href=\"/uploads/{}\" target=\"_blank\"><img src=\"/uploads/{}\" alt=\"{}\" style=\"width:500px;height:auto;\" /></a>",
+                                    "<a id=\"file\" href=\"/uploads/{}\" target=\"_blank\"><img src=\"/uploads/{}\" alt=\"{}\" style=\"width:500px;height:auto;\" /></a>",
                                     filename, filename, filename
                                 ));
                             },
                             "mp4" | "webm" | "ogg" => {
                                 file_links.push_str(&format!(
-                                    "<video width=\"500\" height=\"auto\" controls><source src=\"/uploads/{}\" type=\"video/{}\">Your browser does not support the video tag.</video>",
+                                    "<video id=\"file\" width=\"500\" height=\"auto\" controls><source src=\"/uploads/{}\" type=\"video/{}\">Your browser does not support the video tag.</video>",
                                     filename, extension
                                 ));
                             },
                             _ => {
                                 file_links.push_str(&format!(
-                                    "<a href=\"/uploads/{}\">{}</a>",
+                                    "<a id=\"file\" href=\"/uploads/{}\">{}</a>",
                                     filename, filename
                                 ));
                             }
@@ -68,6 +69,10 @@ pub async fn list_files() -> HttpResponse {
                         ));
                     }
                 }
+            }
+
+            if read_dir(DIRECTORY).unwrap().next().is_none() {
+                file_links = "There is no uploaded file".to_string();
             }
 
             let file_path = format!("{STATIC_DIR}/uploads.html");
