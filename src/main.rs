@@ -7,6 +7,10 @@ use crate::upload_file::{list_files, serve_file};
 
 mod upload_file;
 mod manage;
+mod database;
+mod account;
+
+const URI: &str = "<mongodb-uri>";
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {

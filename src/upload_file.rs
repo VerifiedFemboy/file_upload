@@ -45,7 +45,7 @@ pub async fn list_files() -> HttpResponse {
                         match extension {
                             "png" | "jpg" | "jpeg" | "gif" => {
                                 file_links.push_str(&format!(
-                                    "<div class=\"file_container\"><a id=\"file\" href=\"/uploads/{}\" target=\"_blank\"><img src=\"/uploads/{}\" alt=\"{}\" style=\"width:500px;height:auto;\" /></a>
+                                    "<div class=\"file_container\"><a id=\"file\" href=\"/uploads/{}\" target=\"_blank\"><img src=\"/uploads/{}\" alt=\"{}\" style=\"width:300px;height:auto;\" /></a>
                                     <input type=\"button\" class=\"delete_btn\" value=\"🗑️\" onclick=\"delete_file('{filename}')\"></div>",
                                     filename, filename, filename
                                 ));
@@ -59,15 +59,15 @@ pub async fn list_files() -> HttpResponse {
                             },
                             _ => {
                                 file_links.push_str(&format!(
-                                    "<a id=\"file\" href=\"/uploads/{}\">{}</a>
-                                    <input type=\"button\" class=\"delete_btn\" value=\"🗑️\" onclick=\"delete_file('{filename}')\">",
+                                    "<div class=\"file_container\"><a id=\"file\" href=\"/uploads/{}\"><img src=\"/static/img/file-icon.png\" alt=\"{}\" style=\"width:120px;height:auto;\" /></a>
+                                    <input type=\"button\" class=\"delete_btn\" value=\"🗑️\" onclick=\"delete_file('{filename}')\"></div>",
                                     filename, filename
                                 ));
                             }
                         }
                     } else {
                         file_links.push_str(&format!(
-                            "<a href=\"/uploads/{}\">{}</a>",
+                            "<div class=\"file_container\"><a href=\"/uploads/{}\">{}</a></div>",
                             filename, filename
                         ));
                     }

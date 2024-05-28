@@ -23,14 +23,6 @@ function submit() {
     })
 }
 
-//Idk how it is broken :3c
-function refresh() {
-    setTimeout(function () {
-        location.reload()
-        refresh()
-    }, 1000)
-}
-
 function delete_file(filename) {
     fetch("/manage/delete", {
         method: 'POST',
