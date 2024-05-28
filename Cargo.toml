@@ -10,3 +10,4 @@ actix-web = "4.6.0"
 tokio = "1.37.0"
 futures-util = "0.3.30"
 serde = { version = "1.0.202", features = ["derive"] }
+mongodb = "2.8.2"
