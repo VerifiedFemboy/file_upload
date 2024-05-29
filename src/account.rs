@@ -3,6 +3,7 @@ use actix_web::web::Json;
 use serde::{Deserialize, Serialize};
 
 use crate::database::{Account, Database};
+use crate::token::Token;
 
 #[derive(Serialize, Deserialize)]
 struct AccountInfo {
@@ -12,7 +13,7 @@ struct AccountInfo {
 #[post("/account/create")]
 pub async fn create(account_info: Json<AccountInfo>, db: web::Data<Database>) -> HttpResponse {
     let name = &account_info.name;
-    let token = "";
+    let token = Token::new(7).await.generate().await;
 
     let account = Account::new(name.to_string(), token.to_string()).await;
 
@@ -20,6 +21,4 @@ pub async fn create(account_info: Json<AccountInfo>, db: web::Data<Database>) ->
         Ok(_) => HttpResponse::Ok().finish(),
         Err(_) => HttpResponse::InternalServerError().finish(),
     }
-
-
 }

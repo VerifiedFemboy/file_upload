@@ -12,6 +12,7 @@ mod upload_file;
 mod manage;
 mod database;
 mod account;
+mod token;
 
 const URI: &str = "";
 
