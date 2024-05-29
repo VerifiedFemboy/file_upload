@@ -1,13 +1,23 @@
 use mongodb::{Client, Collection, options::ClientOptions};
+use serde::{Deserialize, Serialize};
 
+#[derive(Serialize, Deserialize)]
 pub struct Account {
-    pub _id: i32,
     pub name: String,
     pub discord_id: String,
     pub upload_location: String,
     pub token: String
 }
 
+impl Account {
+    pub async fn new(name: String, token: String) -> Self {
+        let upload= name.clone();
+        Self {name, discord_id: "".to_string(), upload_location: upload, token}
+    }
+}
+
+#[derive(Clone)]
+#[warn(dead_code)]
 pub struct Database {
     client: Client,
     account_collection: Collection<Account>,
@@ -28,16 +38,4 @@ impl Database {
         Ok(())
     }
 
-    pub async fn get_all_accounts(&self) -> mongodb::error::Result<Vec<Account>> {
-        let cursor = self.account_collection.find(None, None).await?;
-        let mut accounts = Vec::new();
-
-        for result in cursor {
-            match result {
-                Ok(document) => accounts.push(document),
-                Err(e) => return Err(e.into()),
-            }
-        }
-        Ok(accounts)
-    }
 }
