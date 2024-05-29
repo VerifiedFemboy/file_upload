@@ -12,3 +12,4 @@ futures-util = "0.3.30"
 serde = { version = "1.0.202", features = ["derive"] }
 mongodb = "2.8.2"
 log = "0.4.21"
+rand = "0.8.5"
