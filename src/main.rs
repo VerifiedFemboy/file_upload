@@ -20,7 +20,7 @@ const URI: &str = "";
 async fn main() -> std::io::Result<()> {
 
     //Creates a new connection to the database
-
+    let db = Database::new(URI, "server-db", "accounts").await.expect("Failed to connect to the database");
 
     //Creates an upload path which files will be saved
     if !Path::new("./upload").exists() {
@@ -29,8 +29,8 @@ async fn main() -> std::io::Result<()> {
 
     //Runs the server
     HttpServer::new(move || App::new()
-
-
+        .app_data(Data::new(db.clone()))
+        .service(create_account)
         .service(upload_file::upload_post)
         .service(list_files)
         .service(serve_file)

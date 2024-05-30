@@ -1,5 +1,5 @@
 use mongodb::{Client, Collection, options::ClientOptions};
-use mongodb::bson::{doc, Document};
+use mongodb::bson::doc;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone)]
