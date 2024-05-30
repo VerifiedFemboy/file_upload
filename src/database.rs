@@ -1,4 +1,5 @@
 use mongodb::{Client, Collection, options::ClientOptions};
+use mongodb::bson::{doc, Document};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone)]
@@ -38,4 +39,8 @@ impl Database {
         Ok(())
     }
 
+    pub async fn token_match(&self, token: String) -> mongodb::error::Result<Option<Account>> {
+        let result = self.account_collection.find_one(doc!{"token": token}, None).await?;
+        Ok(result)
+    }
 }
