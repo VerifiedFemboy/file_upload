@@ -3,7 +3,7 @@ use std::path::Path;
 use actix_files::{Files, NamedFile};
 use actix_web::{App, get, HttpServer, web};
 use actix_web::web::Data;
-use crate::account::create;
+use crate::account::create_account;
 use crate::database::Database;
 
 use crate::upload_file::{list_files, serve_file};
@@ -30,7 +30,7 @@ async fn main() -> std::io::Result<()> {
     //Runs the server
     HttpServer::new(move || App::new()
         .app_data(Data::new(db.clone()))
-        .service(create)
+        .service(create_account)
         .service(upload_file::upload_post)
         .service(list_files)
         .service(serve_file)

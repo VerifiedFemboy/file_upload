@@ -1,18 +1,18 @@
 use mongodb::{Client, Collection, options::ClientOptions};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Account {
+    pub _id: String,
     pub name: String,
-    pub discord_id: String,
     pub upload_location: String,
     pub token: String
 }
 
 impl Account {
-    pub async fn new(name: String, token: String) -> Self {
-        let upload= name.clone();
-        Self {name, discord_id: "".to_string(), upload_location: upload, token}
+    pub async fn new(_id: String, name: String, token: String) -> Self {
+        let upload = _id.clone();
+        Self {_id, name, upload_location: upload, token}
     }
 }
 
